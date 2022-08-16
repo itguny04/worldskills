@@ -1,0 +1,24 @@
+{
+   "family":"wsi-back-task",
+   "networkMode":"awsvpc",
+   "containerDefinitions":[
+      {
+         "name":"wsi-back",
+         "image":"060764678458.dkr.ecr.ap-northeast-1.amazonaws.com/wsi-image-repo:backend-application",
+         "portMappings":[
+            {
+               "containerPort":8080,
+               "hostPort":8080,
+               "protocol":"tcp"
+            }
+         ],
+         "essential":true
+      }
+   ],
+   "requiresCompatibilities":[
+      "FARGATE"
+   ],
+   "cpu":"256",
+   "memory":"512",
+   "executionRoleArn":"arn:aws:iam::060764678458:role/ecsTaskExecutionRole"
+}
