@@ -1,0 +1,43 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: cloudskills-front-app-deployment
+  namespace: worldskills-service
+spec:
+  replicas: 5
+  selector:
+    matchLabels:
+      app: cloudskills-front-app
+  template:
+    metadata:
+      name: cloudskills-front-app-pod
+      labels:
+        app: cloudskills-front-app
+    spec:
+      containers:
+        - name: cloudskills-front-app
+          image: kgh2133/worldskills:eks-study-front1
+          ports:
+            - containerPort: 80
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: cloudskills-back-app-deployment
+  namespace: worldskills-service
+spec:
+  replicas: 5
+  selector:
+    matchLabels:
+      app: cloudskills-back-app
+  template:
+    metadata:
+      name: cloudskills-back-app-pod
+      labels:
+        app: cloudskills-back-app
+    spec:
+      containers:
+        - name: cloudskills-back-app
+          image: kgh2133/worldskills:eks-study-back1
+          ports:
+            - containerPort: 8080
