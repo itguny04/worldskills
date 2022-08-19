@@ -1,0 +1,35 @@
+version: 0.2
+run-as: root
+
+env:
+  variables:
+    REPO: "060764678458.dkr.ecr.ap-northeast-1.amazonaws.com/wsi-image-repo"
+    REGION: "ap-northeast-1"
+
+phases:
+  pre_build: 
+    commands:
+      # Record the time. 
+      - DATETIME=`date "+%Y%m%d%H%M"`
+      # Login to Elastic Container Registry
+      - echo "Logging to Elastic Container Registry"
+      - aws ecr get-login-password --region ap-northeast-1 | docker login --username AWS --password-stdin 060764678458.dkr.ecr.ap-northeast-1.amazonaws.com
+      # Install jq
+      - yum install -y jq
+  build:
+    commands:
+      - echo Build Process Start...
+      # Dpcker Image Build
+      - echo Building the Docker image...
+      - docker build -t $REPO:$DATETIME .
+      # Edit taskdef.json
+      - echo "$(jq .containerDefinitions[].image=\"$REPO:$DATETIME\" config/taskdef.json)" > config/taskdef.json
+  post_build:
+    commands:
+      - echo Pushing Container Image to AWS ECR...
+      - docker push $REPO:$DATETIME
+
+artifacts:
+  files:
+    - "config/appspec.yaml"
+    - "config/taskdef.json"
