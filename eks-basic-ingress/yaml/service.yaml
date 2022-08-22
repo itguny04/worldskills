@@ -3,6 +3,8 @@ kind: Service
 metadata:
   name: worldskills-front-service
   namespace: wsi-web
+  annotations:
+    alb.ingress.kubernetes.io/healthcheck-path: /
 spec:
   selector:
     app: cloudskills-front-app
@@ -17,9 +19,11 @@ kind: Service
 metadata:
   name: worldskills-back-service
   namespace: wsi-web
+  annotations:
+    alb.ingress.kubernetes.io/healthcheck-path: /v1/health
 spec:
   selector:
-    app: cloudskills-back-app 
+    app: cloudskills-back-app
   ports:
     - name: web-backend-port
       port: 8080
