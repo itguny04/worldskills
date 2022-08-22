@@ -2,7 +2,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: cloudskills-front-app-deployment
-  namespace: worldskills-service
+  namespace: wsi-web
 spec:
   replicas: 5
   selector:
@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
         - name: cloudskills-front-app
-          image: kgh2133/worldskills:eks-study-front1
+          image: 060764678458.dkr.ecr.ap-northeast-2.amazonaws.com/worldskills-repo:frontend-application
           ports:
             - containerPort: 80
 ---
@@ -24,7 +24,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: cloudskills-back-app-deployment
-  namespace: worldskills-service
+  namespace: wsi-web
 spec:
   replicas: 5
   selector:
@@ -38,6 +38,6 @@ spec:
     spec:
       containers:
         - name: cloudskills-back-app
-          image: kgh2133/worldskills:eks-study-back1
+          image: 060764678458.dkr.ecr.ap-northeast-2.amazonaws.com/worldskills-repo:backend-application
           ports:
             - containerPort: 8080

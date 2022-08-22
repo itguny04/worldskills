@@ -1,0 +1,27 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: wsi-ingress
+  namespace: wsi-web
+  annotations:  
+    kubernetes.io/ingress.class: alb
+    alb.ingress.kubernetes.io/load-balancer-name: wsi-alb
+    alb.ingress.kubernetes.io/target-type: ip
+    alb.ingress.kubernetes.io/scheme: internet-facing
+spec:
+  rules:
+    - http:
+      - pathType: Prefix
+        path: "/"
+        backend:
+          service:
+            name: worldskills-front-service
+            port:
+              number: 80
+      - pathType: Prefix
+        path: "/v1/"
+        backend:
+          service:
+            name: worldskills-back-service
+            port:
+              number: 8080

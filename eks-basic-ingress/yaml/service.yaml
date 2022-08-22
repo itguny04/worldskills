@@ -2,7 +2,7 @@ apiVersion: v1
 kind: Service
 metadata:
   name: worldskills-front-service
-  namespace: worldskills-service
+  namespace: wsi-web
 spec:
   selector:
     app: cloudskills-front-app
@@ -16,6 +16,7 @@ apiVersion: v1
 kind: Service
 metadata:
   name: worldskills-back-service
+  namespace: wsi-web
 spec:
   selector:
     app: cloudskills-back-app 
