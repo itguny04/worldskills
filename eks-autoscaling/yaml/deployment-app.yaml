@@ -4,13 +4,12 @@ metadata:
   name: cloudskills-front-app-deployment
   namespace: wsi-web
 spec:
-  replicas: 5
   selector:
     matchLabels:
       app: cloudskills-front-app
   template:
     metadata:
-      name: cloudskills-front-app-pod
+      name: cloudskills-front-app
       labels:
         app: cloudskills-front-app
     spec:
@@ -19,6 +18,11 @@ spec:
         image: 060764678458.dkr.ecr.ap-northeast-2.amazonaws.com/worldskills-repo:frontend-application
         ports:
           - containerPort: 80
+        resources:
+          limits: 
+            cpu: 300m
+          requests:
+            cpu: 50m
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -26,18 +30,21 @@ metadata:
   name: cloudskills-back-app-deployment
   namespace: wsi-web
 spec:
-  replicas: 5
   selector:
     matchLabels:
       app: cloudskills-back-app
   template:
     metadata:
-      name: cloudskills-back-app-pod
       labels:
         app: cloudskills-back-app
     spec:
       containers:
       - name: cloudskills-back-app
-        image: 060764678458.dkr.ecr.ap-northeast-2.amazonaws.com/worldskills-repo:backend-application
+        image: 060764678458.dkr.ecr.ap-northeast-2.amazonaws.com/worldskills-repo:backend-application-v2
         ports:
-          - containerPort: 8080
+        - containerPort: 8080
+        resources:
+          limits: 
+            cpu: 300m
+          requests:
+            cpu: 50m

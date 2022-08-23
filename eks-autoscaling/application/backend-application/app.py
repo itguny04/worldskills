@@ -23,5 +23,12 @@ def username_command(username, command):
 def ip():
     return jsonify({'user-ip':request.remote_addr})
 
+@v1.route('/stress')
+def stress():
+    x = 0.0001
+    for i in range(100000000):
+        x += math.sqrt(x)
+    return jsonify({'status':'ok'})
+
 app.register_blueprint(v1)
 app.run(host='0.0.0.0', port=8080)

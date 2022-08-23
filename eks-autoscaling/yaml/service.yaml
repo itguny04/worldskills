@@ -1,0 +1,31 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: cloudskills-front-app-service
+  namespace: wsi-web
+  annotations:
+    alb.ingress.kubernetes.io/healthcheck-path: /
+spec:
+  selector:
+    app: cloudskills-front-app
+  ports:
+    - name: cloudskills-front-app-port
+      port: 80
+      targetPort: 80
+  type: NodePort
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: cloudskills-back-app-service
+  namespace: wsi-web
+  annotations:
+    alb.ingress.kubernetes.io/healthcheck-path: /v1/health
+spec:
+  selector:
+    app: cloudskills-back-app 
+  ports:
+    - name: cloudskills-back-app-port
+      port: 8080
+      targetPort: 8080
+  type: NodePort

@@ -1,0 +1,13 @@
+apiVersion: autoscaling/v1
+kind: HorizontalPodAutoscaler
+metadata:
+  name: cloudskills-back-app-deployment-hpa
+  namespace: wsi-web
+spec:
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: cloudskills-back-app-deployment
+  minReplicas: 1
+  maxReplicas: 50
+  targetCPUUtilizationPercentage: 50
