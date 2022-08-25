@@ -26,7 +26,12 @@ eksctl create iamserviceaccount \
   --approve
 ```
 
-5. AWS ALB Ingress Controller 설치  
+5. Helm Repo 추가  
+```
+helm repo add eks https://aws.github.io/eks-charts
+```
+
+6. AWS ALB Ingress Controller 설치  
   ```
   helm install aws-load-balancer-controller eks/aws-load-balancer-controller \
     --set clusterName=wsi-cluster \
