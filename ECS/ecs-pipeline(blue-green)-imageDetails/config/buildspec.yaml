@@ -25,4 +25,4 @@ artifacts:
     - "appspec.yaml"
     - "taskdef.json"
     - "imageDetail.json"
-  base-directory: config
+  base-directory: "config"
