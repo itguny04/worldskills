@@ -19,7 +19,7 @@ phases:
       - echo "Pushing Container Image to AWS ECR..."
       - docker push $REPO:$CODEBUILD_RESOLVED_SOURCE_VERSION
       - echo "Create imageDetails.json"
-      - printf "{\"ImageURI\":\"$REPO:$CODEBUILD_RESOLVED_SOURCE_VERSION\"}" > imageDetail.json
+      - printf "{\"ImageURI\":\"$REPO:$CODEBUILD_RESOLVED_SOURCE_VERSION\"}" > config/imageDetail.json
 artifacts:
   files:
     - "appspec.yaml"
