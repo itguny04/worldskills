@@ -1,0 +1,28 @@
+version: 0.2
+run-as: root
+
+env:
+  variables:
+    REPO: "060764678458.dkr.ecr.ap-northeast-1.amazonaws.com/cl-wsi-container-image-repo"
+
+phases:
+  pre_build: 
+    commands:
+      - echo "Logging in to AWS ECR"
+      - aws ecr get-login-password --region ap-northeast-1 | docker login --username AWS --password-stdin 060764678458.dkr.ecr.ap-northeast-1.amazonaws.com
+  build:
+    commands:
+      - echo "Building the Docker image..."
+      - docker build -t $REPO:$CODEBUILD_RESOLVED_SOURCE_VERSION .
+  post_build:
+    commands:
+      - echo "Pushing Container Image to AWS ECR..."
+      - docker push $REPO:$CODEBUILD_RESOLVED_SOURCE_VERSION
+      - echo "Create imageDetails.json"
+      - printf "{\"ImageURI\":\"$REPO:$CODEBUILD_RESOLVED_SOURCE_VERSION\"}" > imageDetail.json
+artifacts:
+  files:
+    - "appspec.yaml"
+    - "taskdef.json"
+    - "imageDetail.json"
+  base-directory: config

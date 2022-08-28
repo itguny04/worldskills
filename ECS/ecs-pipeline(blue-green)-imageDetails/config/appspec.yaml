@@ -1,0 +1,18 @@
+version: 0.0
+Resources:
+  - TargetService:
+      Type: AWS::ECS::Service
+      Properties:
+        TaskDefinition: "<TASK_DEFINITION>"
+        LoadBalancerInfo:
+          ContainerName: "cl-wsi-app"
+          ContainerPort: 8080
+        PlatformVersion: "LATEST"
+        NetworkConfiguration:
+          AwsvpcConfiguration:
+            Subnets:
+              - "subnet-03587ef436df890ba"
+              - "subnet-0109280856b768480"
+            SecurityGroups:
+              - "sg-09b9b6c18d2ae2496"
+            AssignPublicIp: "DISABLED"
